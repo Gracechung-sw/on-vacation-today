@@ -2,6 +2,8 @@ import datetime
 
 from adapters.gcal_client import GoogleCalendarClient
 from adapters.slack_client import SlackClient
+from calendar_client import CalendarClient
+from messaging_client import MessagingClient
 
 STATUS = {
     "연차": {'status_text': '[연차] Paid Time Off', 'status_emoji': ':shushing_face:'},
@@ -10,11 +12,10 @@ STATUS = {
 }
 CALENDAR_NAME = 'hjngy0511@gmail.com'
 
-def main():
-    try:
-        calendar = GoogleCalendarClient()
-        messaging = SlackClient()
 
+
+def main(calendar, messaging):
+    try:
         start_date = datetime.date.today().strftime("%Y-%m-%d") + 'T00:00:00Z' # 'Z' indicates UTC time
         end_date = (datetime.date.today() + datetime.timedelta(days=1)).strftime("%Y-%m-%d") + 'T00:00:00Z' # 'Z' indicates UTC time
 
@@ -31,4 +32,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    calendar = CalendarClient(calendar_service = GoogleCalendarClient())
+    messaging = MessagingClient(messaging_service = SlackClient())
+    main(calendar, messaging)
