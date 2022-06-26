@@ -26,17 +26,17 @@ CALENDAR_NAME = [
 ]  # hjngy0511@gmail.com to team calendar name (ex. [Product_team])
 
 def handle_error(error):
-    # send slack msg
+    # send slack alert
     print("error", error)
 
 def main(calendar, messaging):
     try:
         start_date = (
             datetime.date.today().strftime("%Y-%m-%d") + "T00:00:00Z"
-        )  # 'Z' indicates UTC time
+        )  # 'Z' indicates UTC time # TODO: change start time to now
         end_date = (datetime.date.today() + datetime.timedelta(days=1)).strftime(
             "%Y-%m-%d"
-        ) + "T00:00:00Z"  # 'Z' indicates UTC time
+        ) + "T00:00:00Z"  # 'Z' indicates UTC time # TODO: change end time to in 10 minutes
         for cal in CALENDAR_NAME:
             events = calendar.get_events(cal, start_date, end_date)
 
